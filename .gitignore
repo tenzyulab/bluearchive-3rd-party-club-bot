@@ -1,0 +1,6 @@
+.history
+.vscode/*
+!.vscode/settings.json
+dist
+node_modules
+.env
