@@ -4,7 +4,7 @@ COPY package.json .
 RUN npm i
 COPY tsconfig.json .
 COPY src ./src
-RUN npm run build
+RUN npm run compile
 
 FROM node:18.12.1-bullseye-slim
 WORKDIR /workdir
