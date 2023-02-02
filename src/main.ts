@@ -42,5 +42,5 @@ bot.once('ready', async () => {
   })
 
   // 20分ごとに保存
-  createPeriodicFunction(() => store.save(), 20)
+  createPeriodicFunction(store.save, 20)
 })
