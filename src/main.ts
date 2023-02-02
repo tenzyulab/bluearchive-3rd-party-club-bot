@@ -4,7 +4,6 @@ import { Partials, TextChannel } from 'discord.js'
 import { BOT_TOKEN, CHANNEL_ID_JSON_STORE, GUILD_ID } from './constants.js'
 import { MyBot } from './lib/discord.js'
 import { DiscordStore } from './lib/discord-store.js'
-import { createPeriodicFunction } from './utils.js'
 
 export const bot = new MyBot({
   intents: Number(
@@ -42,5 +41,5 @@ bot.once('ready', async () => {
   })
 
   // 20分ごとに保存
-  createPeriodicFunction(store.save, 20)
+  setInterval(() => store.save(), 20 * 60 * 1000)
 })
