@@ -1,13 +1,25 @@
-import { CategoryChannel, ChannelType, OverwriteType } from 'discord.js'
+import {
+  CategoryChannel,
+  ChannelType,
+  OverwriteType,
+  TextChannel,
+} from 'discord.js'
 import { bot, store } from '../main.js'
 import {
   CATEGORY_ID_ROOM,
+  CHANNEL_ID_CALLBACK,
   CHANNEL_ID_TUTORIAL,
   ROLE_ID_BOT,
   ROLE_ID_MEMBER,
+  USER_ID_OWNER,
 } from '../constants.js'
 
 bot.on('guildMemberAdd', async (member) => {
+  const cbChannel = (await member.guild.channels.fetch(
+    CHANNEL_ID_CALLBACK
+  )) as TextChannel
+  await cbChannel.send(`${USER_ID_OWNER} [AUDIT] ${member.displayName} JOINED`)
+
   const data = store.get(member.id)
   const comeBack = !!data
 
@@ -25,6 +37,10 @@ bot.on('guildMemberAdd', async (member) => {
 
     return
   }
+  const mainChannel = (await member.guild.channels.fetch(
+    CHANNEL_ID_TUTORIAL
+  )) as TextChannel
+  await mainChannel.send(`${member} さんが新しく参加しました！`)
 
   await member.roles.add(member.user.bot ? ROLE_ID_BOT : ROLE_ID_MEMBER)
   store.insert(member)
